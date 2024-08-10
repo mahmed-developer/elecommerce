@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:elecommerce/widgets/custom_text_field.dart';
 import 'package:elecommerce/widgets/custom_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-class SignUpScreen extends ConsumerWidget {
-  final TextEditingController nameController = TextEditingController();
+class LoginScreen extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  SignUpScreen({super.key});
+  LoginScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context,WidgetRef ref) {
     final authController=ref.watch(authControllerProvider.notifier);
     return Scaffold(
       appBar: AppBar(
@@ -24,16 +23,12 @@ class SignUpScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 40.0), // Optional: Add some space at the top
+            const SizedBox(height: 40.0),
             const Text(
-              'Sign up',
+              'Login',
               style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20.0),
-            CustomTextField(
-              labelText: 'Name',
-              controller: nameController,
-            ),
             CustomTextField(
               labelText: 'Email',
               controller: emailController,
@@ -43,36 +38,45 @@ class SignUpScreen extends ConsumerWidget {
               controller: passwordController,
               isPassword: true,
             ),
-            const SizedBox(height: 20.0),
-            Center(
-              child:
-              GestureDetector(child: const Text(
-                'Already have an account?',
-                style: TextStyle(color: Color(0xff96d1c7)),
-              ),
-                onTap: (){
-                  Navigator.of(context).pushNamed('/login');
+            const SizedBox(height: 10.0),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/signup');
                 },
+                child: const Text(
+                  'Forgot your password?',
+                  style: TextStyle(color: Color(0xff96d1c7)),
+                ),
               ),
             ),
-            CustomButton(
-              text: 'SIGN UP',
-              onPressed: () async {
-                bool success = await authController.signUp(
-                  emailController.text.trim(),
-                  passwordController.text.trim(),
-                );
-                try{if (success) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Homepage()));
-                } }catch(e){
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email Already Exists')));
-                }
-              }
-
-    ),
             const SizedBox(height: 20.0),
+            CustomButton(
+              text: 'LOGIN',
+              onPressed: () async{
+                bool success= await authController.signIn(emailController.text.trim(), passwordController.text.trim(),);
+                try{if (success) {
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context)=>const Homepage()));
+                } }catch(e){
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Incorrect Email or Password')));
+                }
+              },
+            ),
+            const SizedBox(height: 20.0),
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: const Text(
+                  'Don’t have an account? Sign up',
+                  style: TextStyle(color: Color(0xff96d1c7)),
+                ),
+              ),
+            ),
             const Center(
-              child: Text('Or sign up with social account'),
+              child: Text('Or login with social account'),
             ),
             const SizedBox(height: 20.0),
             Row(
@@ -82,7 +86,7 @@ class SignUpScreen extends ConsumerWidget {
                   icon: Image.asset('assets/google.png'),
                   iconSize: 40.0,
                   onPressed: () {
-                    // Implement Google sign-up logic here
+                    // Implement Google login logic here
                   },
                 ),
                 const SizedBox(width: 20.0),
@@ -90,7 +94,7 @@ class SignUpScreen extends ConsumerWidget {
                   icon: Image.asset('assets/facebook.png'),
                   iconSize: 40.0,
                   onPressed: () {
-                    // Implement Facebook sign-up logic here
+                    // Implement Facebook login logic here
                   },
                 ),
               ],

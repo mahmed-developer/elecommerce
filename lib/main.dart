@@ -1,5 +1,6 @@
 
 import 'package:elecommerce/Screens/Homepage.dart';
+import 'package:elecommerce/Screens/login.dart';
 import 'package:elecommerce/Screens/signup.dart';
 import 'package:elecommerce/Screens/signup.dart';
 import 'package:elecommerce/firebase_options.dart';
@@ -23,7 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUpPage(),
+      initialRoute: '/signup',
+      routes: {
+        '/login': (ctx) => LoginScreen(),
+        '/signup': (ctx) => SignUpScreen(),
+      },
     );
   }
 }
