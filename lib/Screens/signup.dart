@@ -80,18 +80,10 @@ class SignUpScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Image.asset('assets/google.png'),
+                  icon: Image.asset('assets/google.png', height: 50, width: 50),
                   iconSize: 40.0,
                   onPressed: () {
                     // Implement Google sign-up logic here
-                  },
-                ),
-                const SizedBox(width: 20.0),
-                IconButton(
-                  icon: Image.asset('assets/facebook.png'),
-                  iconSize: 40.0,
-                  onPressed: () {
-                    // Implement Facebook sign-up logic here
                   },
                 ),
               ],

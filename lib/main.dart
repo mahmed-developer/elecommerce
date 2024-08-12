@@ -1,4 +1,5 @@
 import 'package:elecommerce/Screens/signup.dart';
+import 'package:elecommerce/Screens/splash_screen.dart';
 import 'package:elecommerce/controller/auth_controller.dart';
 import 'package:elecommerce/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,7 +35,9 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: authState == null ? LoginScreen() : const Homepage(),
+      initialRoute: '/splash',
       routes: {
+        '/splash': (context) => SplashScreen(), 
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignUpScreen(),
         '/homepage': (context) => const Homepage(),
