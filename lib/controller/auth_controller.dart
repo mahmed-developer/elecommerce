@@ -12,7 +12,7 @@ class AuthController extends StateNotifier<User?> {
 
   AuthController(this.auth, this.firestore) : super(auth.currentUser);
 
-  Future<bool> signUp(String email, String password) async {
+  Future<bool> signUp(String email, String password, String name ) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
@@ -24,6 +24,7 @@ class AuthController extends StateNotifier<User?> {
       // Save user data to Firestore
       await firestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
+        'name': name,
         'email': email,
         'pass': password,
         'createdAt': FieldValue.serverTimestamp(),
@@ -50,6 +51,7 @@ class AuthController extends StateNotifier<User?> {
       return false;
     }
   }
+  String? get uid => state?.uid;
 
   Future<void> signOut() async {
     await auth.signOut();

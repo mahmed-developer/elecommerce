@@ -54,15 +54,33 @@ class LoginScreen extends ConsumerWidget {
             const SizedBox(height: 20.0),
             CustomButton(
               text: 'LOGIN',
-              onPressed: () async{
-                bool success= await authController.signIn(emailController.text.trim(), passwordController.text.trim(),);
-                try{if (success) {
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context)=>const Homepage()));
-                } }catch(e){
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Incorrect Email or Password')));
+              onPressed: () async {
+                try {
+                  bool success = await authController.signIn(
+                    emailController.text.trim(),
+                    passwordController.text.trim(),
+                  );
+
+                  if (success) {
+                    // Navigate to the Homepage if sign-in is successful
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => const Homepage()),
+                    );
+                  } else {
+                    // Show SnackBar if sign-in failed
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please check your credentials.')),
+                    );
+                  }
+                } catch (e) {
+                  // Show SnackBar with error message if an exception occurs
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Sign-in Error: ${e.toString()}')),
+                  );
                 }
               },
             ),
+
             const SizedBox(height: 20.0),
             Center(
               child: TextButton(

@@ -61,6 +61,7 @@ class SignUpScreen extends ConsumerWidget {
                 bool success = await authController.signUp(
                   emailController.text.trim(),
                   passwordController.text.trim(),
+                    nameController.text.trim()
                 );
                 try{if (success) {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Homepage()));
